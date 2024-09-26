@@ -316,7 +316,6 @@ body {
   position: absolute;
   z-index: -2;
   box-shadow: 0px 0px 0px;
-
 }
 
 .container div>.unavailable>.sad-face::before,
@@ -352,4 +351,88 @@ body {
   overflow: hidden;
   box-shadow: 0px 0px 0px;
   z-index: -2;
+}
+
+/* .skeleton  */
+
+.container div>.skeleton {
+  animation: skeleton-loading 0.8s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsla(0, 0%, 71%, 0.507);
+  }
+
+  100% {
+    background-color: #f3f2f2ce;
+  }
+}
+
+.container div>.skeleton-container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.skeleton-container>div {
+  position: static;
+  width: 35rem;
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 0px;
+  margin: 10px 10px 10px 10px;
+  justify-content: flex-start;
+}
+
+.skeleton-container>.skeleton-image {
+  position: static;
+  width: 20rem;
+  height: 30rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.25rem;
+  z-index: 5;
+  box-shadow: 0px 0px 0px;
+  margin: 10px 10px 10px 10px;
+}
+
+.skeleton-container>div>.skeleton-text {
+  position: static;
+  width: 30rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  box-shadow: 0px 0px 0px;
+}
+
+.skeleton-container>div>.skeleton-text__body {
+  position: relative;
+  width: 30rem;
+  height: 2.3rem;
+  box-shadow: 0px 0px 0px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-container>div>.skeleton-group-button {
+  position: relative;
+  width: 30rem;
+  height: 2rem;
+  box-shadow: 0px 0px 0px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.skeleton-group-button>.skeleton-footer {
+  position: relative;
+  width: 14rem;
+  height: 2.7rem;
+  box-shadow: 0px 0px 0px;
+  margin-bottom: 0.5rem;
 }
