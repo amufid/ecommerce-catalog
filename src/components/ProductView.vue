@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import Skeleton from './SkeletonView.vue'
 
 const category = ref('')
 const image = ref('')
@@ -8,18 +9,20 @@ const rating = ref({ rate: 0, count: 0 })
 const title = ref('')
 const setId = ref(1)
 const description = ref('')
+const isLoading = ref(true)
 
 // function increment id 
 const increment = () => {
+   isLoading.value = true
    if (setId.value >= 20) {
-      setId.value = -1 + 1
+      setId.value = 0
    }
    setId.value += 1
-   fetchData()
+   getProduct()
 }
 
 // fetch product by id product 
-const fetchData = () => {
+const getProduct = () => {
    fetch(`https://fakestoreapi.com/products/${setId.value}`)
       .then(res => res.json())
       .then(json => {
@@ -29,19 +32,24 @@ const fetchData = () => {
          rating.value = json.rating
          title.value = json.title
          description.value = json.description
+         isLoading.value = false
+      })
+      .catch(err => {
+         isLoading.value = false
+         console.log(err)
       })
 }
-fetchData();
 
-const categories = ["men's clothing", "women's clothing"];
+getProduct();
 </script>
 
 <template>
    <!-- section men's clothing  -->
-   <section id="Page-Men" v-if="category === categories[0]">
+   <section id="Page-Men" v-if="category === `men's clothing`">
       <div class="container">
          <div class="bg-color-men">
-            <div>
+            <Skeleton v-if="isLoading" />
+            <div v-else>
                <div class="image-product">
                   <img class="photo-product" :src='image' :alt="title">
                </div>
@@ -68,10 +76,11 @@ const categories = ["men's clothing", "women's clothing"];
    </section>
 
    <!-- section women's clothing  -->
-   <section id="Page-women" v-if="category === categories[1]">
+   <section id="Page-women" v-else-if="category === `women's clothing`">
       <div class="container">
          <div class="bg-color-women">
-            <div>
+            <Skeleton v-if="isLoading" />
+            <div v-else>
                <div class="image-product">
                   <img class="photo-product" :src='image' :alt="title">
                </div>
@@ -98,14 +107,15 @@ const categories = ["men's clothing", "women's clothing"];
    </section>
 
    <!-- section unavailable  -->
-   <section id="Page-Unavailable" v-if="!categories.includes(category)">
+   <section id="Page-Unavailable" v-else>
       <div class="container">
          <div class="bg-color-unavailable">
-            <div>
+            <Skeleton v-if="isLoading" />
+            <div v-else>
                <div class="unavailable">
                   <div class="sad-face"></div>
                   <div class="mouth"></div>
-                  <p>This product is unavailable to show</p>
+                  <p>This product is unavailable to show.</p>
                   <button class="btn-next-unavailable" @click="increment">Next product</button>
                </div>
             </div>
